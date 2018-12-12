@@ -1,7 +1,9 @@
 package main
 
 import (
-	"./handler"
+	"os"
+
+	"github.com/kamontia/kusoapp/handler"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
@@ -18,5 +20,6 @@ func main() {
 	e.GET("/hello", handler.Hello())
 
 	// サーバー起動
-	e.Start(":9000") //ポート番号指定してね
+	port := os.Getenv("PORT")
+	e.Start(":" + port) //ポート番号指定してね
 }
