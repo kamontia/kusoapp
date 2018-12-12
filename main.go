@@ -18,5 +18,5 @@ func main() {
 	e.GET("/hello", handler.Hello())
 
 	// サーバー起動
-	e.Start(":80") //ポート番号指定してね
+	e.Start(":9000") //ポート番号指定してね
 }
