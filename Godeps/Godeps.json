@@ -66,6 +66,22 @@
 			"Rev": "505ab145d0a99da450461ae2c1a9f6cd10d1f447"
 		},
 		{
+			"ImportPath": "golang.org/x/net/context",
+			"Rev": "49bb7cea24b1df9410e1712aa6433dae904ff66a"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context/ctxhttp",
+			"Rev": "49bb7cea24b1df9410e1712aa6433dae904ff66a"
+		},
+		{
+			"ImportPath": "golang.org/x/oauth2",
+			"Rev": "c57b0facaced709681d9f90397429b9430a74754"
+		},
+		{
+			"ImportPath": "golang.org/x/oauth2/internal",
+			"Rev": "c57b0facaced709681d9f90397429b9430a74754"
+		},
+		{
 			"ImportPath": "golang.org/x/sys/unix",
 			"Rev": "b05ddf57801d2239d6ab0ee35f9d981e0420f4ac"
 		}

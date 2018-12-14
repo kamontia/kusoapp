@@ -18,6 +18,8 @@ func main() {
 
 	// ルーティング
 	e.GET("/hello", handler.Hello())
+	e.GET("/auth", handler.Authentication())
+	e.GET("/callback", handler.Callback())
 
 	// サーバー起動
 	port := os.Getenv("PORT")
