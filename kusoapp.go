@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"io"
 	"net/http"
+	"os"
 
 	"github.com/kamontia/kusoapp/handler"
 	"github.com/labstack/echo"
@@ -70,8 +71,8 @@ func main() {
 	e.Renderer = renderer
 
 	// サーバー起動
-	// port := os.Getenv("PORT")
-	// e.Logger.Fatal(e.Start(":" + port)) //ポート番号指定してね
+	port := os.Getenv("PORT")
+	e.Logger.Fatal(e.Start(":" + port)) //ポート番号指定してね
 
 	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: "a8ed99621b01629e94e966e33f6f8ce72b52a020"})
 	tc := oauth2.NewClient(oauth2.NoContext, ts)
