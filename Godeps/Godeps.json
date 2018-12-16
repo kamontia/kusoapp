@@ -9,6 +9,11 @@
 			"Rev": "3af4c746e1c248ee8491a3e0c6f7a9cd831e95f8"
 		},
 		{
+			"ImportPath": "github.com/google/go-querystring/query",
+			"Comment": "v1.0.0",
+			"Rev": "44c6ddd0a2342c386950e880b658017258da92fc"
+		},
+		{
 			"ImportPath": "github.com/labstack/echo",
 			"Comment": "v3.3.4-60-g3f8b45c",
 			"Rev": "3f8b45c8d0dd840198a6b24b3393e5ec553dcb85"
@@ -47,6 +52,10 @@
 			"ImportPath": "github.com/mattn/go-isatty",
 			"Comment": "v0.0.4-6-g3fb116b",
 			"Rev": "3fb116b820352b7f0c281308a4d6250c22d94e27"
+		},
+		{
+			"ImportPath": "github.com/uetchy/go-qiita/qiita",
+			"Rev": "0949ba53ab87a31f9f274e2469ed9c9d34ef4478"
 		},
 		{
 			"ImportPath": "github.com/valyala/bytebufferpool",
