@@ -193,8 +193,8 @@ func RetrieveToken(ctx context.Context, clientID, clientSecret, tokenURL string,
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	// req.Header.Set("Content-Type", "application/json")
+	// req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Set("Content-Type", "application/json")
 	if !bustedAuth {
 		req.SetBasicAuth(url.QueryEscape(clientID), url.QueryEscape(clientSecret))
 	}
