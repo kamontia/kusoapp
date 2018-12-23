@@ -40,7 +40,7 @@ func main() {
 
 	// ルーティング
 	e.GET("/hello", handler.Hello())
-	e.GET("/auth", handler.Authentication())
+	// e.GET("/auth", handler.Authentication())
 	e.GET("/auth/qiita/callback", handler.Callback())
 	e.GET("/", func(c echo.Context) error {
 		conf := oauth2.Config{
@@ -48,12 +48,12 @@ func main() {
 			ClientSecret: "f7ba57bdb7e1ed760b0c513e92be91f25ff0e4f9",
 			Scopes: []string{
 				"read_qiita",
-				"read_qiita_team"},
+			},
 			Endpoint: oauth2.Endpoint{
 				AuthURL:  "https://qiita.com/api/v2/oauth/authorize",
 				TokenURL: "https://qiita.com/api/v2/access_tokens",
 			},
-			RedirectURL: "http://localhost:3001/callback",
+			RedirectURL: "https://kusoapp.herokuapp.com/callback",
 		}
 
 		// アクセス用のURLの発行
