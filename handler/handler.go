@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"github.com/kamontia/kusoapp/data"
 	"github.com/labstack/echo"
 	"golang.org/x/oauth2"
 )
@@ -16,6 +17,23 @@ type Token struct {
 	Client_id string `json:"client_id"`
 	Scopes    string `json:"scopes"`
 	Token     string `json:"token"`
+}
+
+type MyStock struct {
+	Title string `json:"title"`
+	Url   string `json:"url"`
+	Like  string `json:"like"`
+}
+
+// Override
+func (mystock *MyStock) MarshalJSON() ([]byte, error) {
+	str := `{
+		"title": "` + mystock.Title + `",
+		"url":"` + mystock.Url + `",
+		"like":"` + mystock.Like + `"
+	}`
+	jsonByte := ([]byte)(str)
+	return jsonByte, nil
 }
 
 func Hello() echo.HandlerFunc {
@@ -82,26 +100,57 @@ func Callback() echo.HandlerFunc {
 		byteArray, _ := ioutil.ReadAll(response.Body)
 		fmt.Println(string(byteArray))
 
-		// token, err := conf.Exchange(context.Background(), code)
+		// token, er r := conf.Exchange(context.Background(), code)
 		// if err != nil {
 		// 	log.Fatal(err)
 		// }
 
-		//var info []Token
-		// json.Unmarshal(byteArray, &Token)
-		resp := string(byteArray)
-		s, _ := json.Marshal(resp)
-		fmt.Printf("Access Token: %T %T %v\n", byteArray, resp, string(s))
+		var info Token
+		// json.Unmarshal(byteArray, &info)
+
+		// s, _ := json.Marshal(resp)
+		fmt.Printf("Access Token: %T %v %v\n", byteArray, string(byteArray), byteArray)
+		b := json.Unmarshal(byteArray, &info)
+		if b != nil {
+			fmt.Errorf("Error")
+		}
+
+		fmt.Printf("JSON.Unmarshal -> %T %#v\n\n", b, info)
 		// token := string(s)
 
-		jsonStr = `
-			"Authorization": "Bearer ` + string(s) + `",
-		`
-
 		// アクセストークンを利用して、各種APIにアクセスする
-		// client := conf.Client(context.Background(), token)
-		// response, err := client.Get("https://qiita.com/api/v2/authenticated_user")
+		// client = conf.Client(context.Background(), &info)
+		// response, err = client.Get("https://qiita.com/api/v2/authenticated_user")
 
+		req, _ := http.NewRequest("GET", "https://qiita.com/api/v2/authenticated_user", nil)
+		req.Header.Set("Authorization", "Bearer "+info.Token)
+		client = &http.Client{}
+		resp, err := client.Do(req)
+
+		byteArray, err = ioutil.ReadAll(resp.Body)
+		fmt.Println(string(byteArray))
+		resp.Body.Close()
+
+		req, _ = http.NewRequest("GET", "https://qiita.com//api/v2/users/kamontia/stocks", nil)
+		req.Header.Set("Authorization", "Bearer "+info.Token)
+		client = &http.Client{}
+		resp, err = client.Do(req)
+
+		byteArray, err = ioutil.ReadAll(resp.Body)
+
+		var stock data.Stock
+		json.Unmarshal(byteArray, &stock)
+
+		for _, v := range stock {
+			fmt.Printf("Title:%s\nLike:%d\nURL:%s\nReaction:%d\nPageView:%d\n",
+				v.Title, v.LikesCount, v.URL, v.ReactionsCount, v.PageViewsCount)
+		}
+
+		//fmt.Println(string(byteArray))
+		resp.Body.Close()
+
+		//fmt.Println(string(byteArray))
+		resp.Body.Close()
 		// if err != nil {
 		// 	log.Fatal(err)
 		// }
@@ -110,7 +159,12 @@ func Callback() echo.HandlerFunc {
 
 		// fmt.Println(string(byteArray))
 
-		return c.String(http.StatusOK, "Callback")
+		json, err := json.Marshal(stock)
+		if err != nil {
+			fmt.Errorf("Fail: Convert struct to json")
+		}
+
+		return c.String(http.StatusOK, string(json))
 
 	}
 }
